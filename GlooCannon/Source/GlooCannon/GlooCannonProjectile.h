@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GlooCannon/GlooBlob.h"
+
 #include "GlooCannonProjectile.generated.h"
 
 class USphereComponent;
@@ -22,12 +24,17 @@ class AGlooCannonProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	TSubclassOf<AGlooBlob> GlooBlobClass;
+
 public:
 	AGlooCannonProjectile();
 
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	void CreateGlooBlob(AActor* OtherACtor, UPrimitiveComponent* OtherComp, UPrimitiveComponent* HitComp);
 
 	/** Returns CollisionComp subobject **/
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }

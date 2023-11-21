@@ -19,7 +19,7 @@ public:
 	TSubclassOf<class AGlooCannonProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	float FireRate = 450;
+	float BulletsPerMinute = 450;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
