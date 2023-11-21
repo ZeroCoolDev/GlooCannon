@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class AGlooCannonProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	float FireRate = 450;
+
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;
@@ -38,6 +41,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* FireAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* StartFireAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* EndFireAction;
+
 	/** Sets default values for this component's properties */
 	UTP_WeaponComponent();
 
@@ -53,6 +62,16 @@ protected:
 	/** Ends gameplay for this component. */
 	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	UFUNCTION(BlueprintCallable, Category="Weapon")
+	void StartFire();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon")
+	void EndFire();
+
+	float LastFireTime;
+	float TimeBetweenShots;
+	FTimerHandle TimerHandle_BetweenShots;
 
 private:
 	/** The Character holding this weapon*/

@@ -108,8 +108,8 @@ void UTP_WeaponComponent::AttachWeapon(AGlooCannonCharacter* TargetCharacter)
 			// Fire
 			//EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::Fire);
 
-			EnhancedInputComponent->BindAction(StartFireAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::StartFire);
-			EnhancedInputComponent->BindAction(EndFireAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::EndFire);
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::StartFire);
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::EndFire);
 		}
 	}
 }
