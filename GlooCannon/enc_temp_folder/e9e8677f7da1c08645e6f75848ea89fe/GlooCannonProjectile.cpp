@@ -46,6 +46,7 @@ void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 	}
 
 	Destroy();
+	// TODO: add back in a concept of weight for the object the gloo hits
 }
 
 void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherACtor, UPrimitiveComponent* OtherComp, const FHitResult& Hit)
@@ -64,7 +65,13 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherACtor, UPrimitiveCompone
 
 			gloo->AttachToActor(OtherACtor, attachmentTransformRules);
 
-			OtherComp->AddImpulseAtLocation(-GetVelocity(), Hit.Location);
+			OtherComp->AddImpulseAtLocation(-GetVelocity() * 10.f, Hit.Location);
+			
+			// the impulse velocity is CONSTANTLY being applied versus an impulse...
+			// it's definitely because we're attaching the two objects but I am honeslty not sure why
+			UE_LOG(LogTemp, Warning, TEXT("spamspam, %.2f, %.2f, %.2f"), GetVelocity().X, GetVelocity().Y, GetVelocity().Z);
+			//OtherComp->AddImpulseAtLocation(GetVelocity() * 100.f, Hit.Location);
+			UE_LOG(LogTemp, Warning, TEXT("spamspam"));
 		}
 	}
 }
