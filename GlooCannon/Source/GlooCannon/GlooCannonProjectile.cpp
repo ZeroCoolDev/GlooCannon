@@ -34,7 +34,7 @@ AGlooCannonProjectile::AGlooCannonProjectile()
 
 void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (GlooBlobClass && !OtherActor->IsA(GlooBlobClass))
+	if (GlooBlobClass)
 	{
 		const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor);
 		if (OtherCharacter)
