@@ -48,7 +48,7 @@ void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 	Destroy();
 }
 
-void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveComponent* OtherComp, const FHitResult& Hit)
+void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherACtor, UPrimitiveComponent* OtherComp, const FHitResult& Hit)
 {
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -59,18 +59,18 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 		AActor* gloo = myWorld->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters);
 		if (gloo)
 		{
-			if (AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo))
-				glooBlob->Init(Hit, !OtherActor->IsA(GlooBlobClass));
-
 			if (OtherComp->IsSimulatingPhysics())
 			{
 				// Apply Gloo Weight
 				constexpr bool bWeild = true;
 				const FAttachmentTransformRules attachmentTransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, bWeild);
-				gloo->AttachToActor(OtherActor, attachmentTransformRules);
+				gloo->AttachToActor(OtherACtor, attachmentTransformRules);
 
 				OtherComp->AddImpulseAtLocation(-GetVelocity(), Hit.Location);
 			}
+
+			if (AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo))
+				glooBlob->SetImpact(Hit);
 		}
 	}
 }

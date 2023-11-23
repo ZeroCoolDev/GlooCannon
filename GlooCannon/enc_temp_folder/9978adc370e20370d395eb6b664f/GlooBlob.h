@@ -19,6 +19,20 @@ public:
 	// Sets default values for this actor's properties
 	AGlooBlob();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateGlooEffects(float GlooSize);
+
+	void SetImpact(const FHitResult& Hit) { Impact = Hit; }
+
+	UPROPERTY(EditDefaultsOnly, Category="Decal")
+	UMaterial* Decal;
+
+	UPROPERTY(EditDefaultsOnly, Category="Decal")
+	float DecalSize;
+
+	UPROPERTY(EditDefaultsOnly, Category="Decal")
+	float DecalDepth;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,12 +42,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
-	UBoxComponent* BoxCollision;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
 	USphereComponent* SphereCollision;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* StaticMesh;
+
+	FHitResult Impact;
 };
