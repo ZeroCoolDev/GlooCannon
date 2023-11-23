@@ -28,6 +28,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
+	UBoxComponent* BoxCollision;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
 	USphereComponent* SphereCollision;
 

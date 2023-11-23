@@ -8,6 +8,8 @@ AGlooBlob::AGlooBlob()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	//BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	//BoxCollision->SetGenerateOverlapEvents(true);
 	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
 	SphereCollision->SetGenerateOverlapEvents(true);
 	RootComponent = SphereCollision;
