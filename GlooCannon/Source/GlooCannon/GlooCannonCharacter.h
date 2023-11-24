@@ -38,7 +38,6 @@ class AGlooCannonCharacter : public ACharacter
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
-
 	
 public:
 	AGlooCannonCharacter();

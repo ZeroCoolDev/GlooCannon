@@ -3,7 +3,9 @@
 #include "GlooCannonProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "GlooCannon/WeightComponent.h"
 #include "GameFramework/Character.h"
+#include "GlooCannon/GlooCannonCharacter.h"
 
 AGlooCannonProjectile::AGlooCannonProjectile() 
 {
@@ -38,9 +40,7 @@ void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 	{
 		const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor);
 		if (OtherCharacter)
-		{
-			// Apply gloo effect to character
-		}
+			AddWeightToTarget(OtherCharacter);
 		else
 			CreateGlooBlob(OtherActor, OtherComp, Hit);
 	}
@@ -73,4 +73,15 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 			}
 		}
 	}
+}
+
+void AGlooCannonProjectile::AddWeightToTarget(const ACharacter* OtherCharacter) const
+{
+	UE_LOG(LogTemp, Warning, TEXT("spamspam, AddWeightToTarget"));
+	if (!OtherCharacter)
+		return;
+
+	UWeightComponent* WeightComponent = Cast<UWeightComponent>(OtherCharacter->GetComponentByClass(UWeightComponent::StaticClass()));
+	if (WeightComponent)
+		WeightComponent->AddWeight();
 }

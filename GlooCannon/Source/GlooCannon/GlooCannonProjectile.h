@@ -40,5 +40,8 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+protected:
+	void AddWeightToTarget(const ACharacter* OtherCharacter) const;
 };
 

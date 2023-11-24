@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GlooCannon/WeightComponent.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,6 @@ AGlooCannonCharacter::AGlooCannonCharacter()
 	Mesh1P->CastShadow = false;
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
-
 }
 
 void AGlooCannonCharacter::BeginPlay()
