@@ -25,7 +25,8 @@ void AGlooBlob::Init(const FHitResult& Hit, bool bAddSplatter)
 {
 	const float GlooMin = 0.075f, GlooMax = 0.13f;
 	const float GlooSizeMod = FMath::FRandRange(GlooMin, GlooMax);
-	CreateGlooEffects(GlooSizeMod);
+	CreateSizeEffect(StaticMesh, GlooSizeMod);
+	CreateGlooColorEffect(StaticMesh);
 
 	if (bAddSplatter)
 	{
@@ -42,7 +43,12 @@ void AGlooBlob::Init(const FHitResult& Hit, bool bAddSplatter)
 
 		UDecalComponent* DecalComponent = UGameplayStatics::SpawnDecalAttached(Decal, DecalBounds, Hit.GetComponent(), NAME_None, Location, RandomRollRotation, EAttachLocation::KeepWorldPosition);
 		if (DecalComponent)
+		{
 			DecalComponent->SetFadeIn(0.25f, 0.4f);
+			// In testing I can't decide if it looks better with the splatter growing in size of not but for now leave it out
+			// CreateSizeEffect(DecalComponent, DecalSizeMod);
+			CreateSplatterColorEffect(DecalComponent);
+		}
 	}
 }
 

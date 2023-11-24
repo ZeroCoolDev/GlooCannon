@@ -22,7 +22,13 @@ public:
 	void Init(const FHitResult& Hit, bool bAddSplatter);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void CreateGlooEffects(float GlooSize);
+	void CreateSizeEffect(const USceneComponent* SceneComponent, float MaxSize);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateGlooColorEffect(const UPrimitiveComponent* SceneComponent);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateSplatterColorEffect(const UDecalComponent* SceneComponent);
 
 	UPROPERTY(EditDefaultsOnly, Category="Decal")
 	UMaterial* Decal;
