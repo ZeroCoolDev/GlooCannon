@@ -22,15 +22,12 @@ void UWeightComponent::AddWeight()
 	if (WeightContributorCount >= WeightThreshold)
 		return;
 
-	UE_LOG(LogTemp, Warning, TEXT("spamspam, adding weight"));
 	++WeightContributorCount;
 
 	if (MovementComponent)
 	{
 		const float CurrentMaxWalkSpeed = MovementComponent->MaxWalkSpeed;
 		MovementComponent->MaxWalkSpeed = CurrentMaxWalkSpeed * 0.9f;
-
-		UE_LOG(LogTemp, Warning, TEXT("spamspam, reducing movement speed from %.2f to %.2f"), CurrentMaxWalkSpeed, MovementComponent->MaxWalkSpeed);
 
 		if (WeightContributorCount >= WeightThreshold)
 			MovementComponent->DisableMovement();

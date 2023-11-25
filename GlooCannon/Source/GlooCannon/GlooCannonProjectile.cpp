@@ -77,7 +77,6 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 
 void AGlooCannonProjectile::AddWeightToTarget(const ACharacter* OtherCharacter) const
 {
-	UE_LOG(LogTemp, Warning, TEXT("spamspam, AddWeightToTarget"));
 	if (!OtherCharacter)
 		return;
 
