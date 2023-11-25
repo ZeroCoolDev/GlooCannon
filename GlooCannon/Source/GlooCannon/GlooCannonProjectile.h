@@ -43,5 +43,8 @@ public:
 
 protected:
 	void AddWeightToTarget(const ACharacter* OtherCharacter) const;
+
+private:
+	const TArray<FName> GlooableSockets = TArray<FName> { FName("ghostBeast_clavicle_r"), FName("ghostBeast_clavicle_l"), FName("ghostBeast_pelvis"), FName("ghostBeast_upperarm_twist_01_l"), FName("ghostBeast_upperarm_twist_01_r"), FName("ghostBeast_head"), FName("ghostBeast_thigh_l"), FName("ghostBeast_thigh_r") };
 };
 

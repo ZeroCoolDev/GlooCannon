@@ -19,7 +19,7 @@ UWeightComponent::UWeightComponent()
 
 void UWeightComponent::AddWeight()
 {
-	if (WeightContributorCount >= WeightThreshold)
+	if (IsGlood())
 		return;
 
 	++WeightContributorCount;

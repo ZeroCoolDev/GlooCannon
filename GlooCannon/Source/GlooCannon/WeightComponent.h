@@ -19,6 +19,9 @@ public:
 
 	void AddWeight();
 
+	UFUNCTION(BlueprintCallable)
+	bool IsGlood() { return WeightContributorCount >= WeightThreshold; }
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
