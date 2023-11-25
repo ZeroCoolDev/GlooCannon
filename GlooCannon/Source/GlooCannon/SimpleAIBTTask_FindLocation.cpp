@@ -17,7 +17,7 @@ USimpleAIBTTask_FindLocation::USimpleAIBTTask_FindLocation()
 	NodeName = TEXT("Find Random Location");
 
 	// accept only vectors in the behavior tree for key names (just nice filterability)
-	BlackboardKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(USimpleAIBTTask_FindLocation, BlackboardKey));
+	//BlackboardKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(USimpleAIBTTask_FindLocation, BlackboardKey));
 }
 
 void USimpleAIBTTask_FindLocation::OnGameplayTaskActivated(UGameplayTask& Task)
