@@ -67,7 +67,7 @@ void UTP_WeaponComponent::Fire()
 
 void UTP_WeaponComponent::StartFire()
 {
-	const float intialDelay = FMath::Max(LastFireTime + TimeBetweenShots - GetWorld()->TimeSeconds, 0.f);
+	const float intialDelay = FMath::Max(TimeBetweenShots - GetWorld()->TimeSeconds, 0.f);
 
 	if (UWorld* myWorld = GetWorld())
 		myWorld->GetTimerManager().SetTimer(TimerHandle_BetweenShots, this, &UTP_WeaponComponent::Fire, TimeBetweenShots, true, intialDelay);

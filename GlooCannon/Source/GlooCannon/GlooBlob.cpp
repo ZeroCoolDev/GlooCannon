@@ -11,14 +11,14 @@ AGlooBlob::AGlooBlob()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
-	SphereCollision->SetGenerateOverlapEvents(true);
-	RootComponent = SphereCollision;
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	BoxCollision->SetGenerateOverlapEvents(true);
+	RootComponent = BoxCollision;
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetGenerateOverlapEvents(false);
 	StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	StaticMesh->SetupAttachment(SphereCollision);
+	StaticMesh->SetupAttachment(BoxCollision);
 }
 
 void AGlooBlob::Init(const FHitResult& Hit, bool bAddSplatter)

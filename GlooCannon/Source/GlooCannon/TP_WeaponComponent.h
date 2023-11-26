@@ -69,7 +69,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void EndFire();
 
-	float LastFireTime;
 	float TimeBetweenShots;
 	FTimerHandle TimerHandle_BetweenShots;
 

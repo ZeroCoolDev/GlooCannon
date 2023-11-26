@@ -50,7 +50,7 @@ public:
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-	USphereComponent* SphereCollision;
+	UBoxComponent* BoxCollision;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* StaticMesh;
