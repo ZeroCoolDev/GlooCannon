@@ -53,9 +53,8 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 		AActor* gloo = myWorld->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters);
 		if (gloo)
 		{
-			AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo);
-			if (glooBlob && !OtherActor->IsA(GlooBlobClass))
-				glooBlob->AddSplatter(Hit);
+			if (AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo))
+				glooBlob->Init(Hit, !OtherActor->IsA(GlooBlobClass));
 
 			constexpr bool bWeld = true;
 			const FAttachmentTransformRules attachmentTransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, bWeld);
