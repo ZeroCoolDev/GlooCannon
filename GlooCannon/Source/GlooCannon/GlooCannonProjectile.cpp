@@ -36,7 +36,7 @@ AGlooCannonProjectile::AGlooCannonProjectile()
 
 void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (GlooBlobClass)
+	if (!OtherActor->IsA(AGlooCannonCharacter::StaticClass()) && GlooBlobClass)
 		CreateGlooBlob(OtherActor, OtherComp, Hit);
 
 	Destroy();
@@ -56,8 +56,8 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 			if (AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo))
 				glooBlob->Init(Hit, !OtherActor->IsA(GlooBlobClass));
 
-			constexpr bool bWeild = true;
-			const FAttachmentTransformRules attachmentTransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, bWeild);
+			constexpr bool bWeld = true;
+			const FAttachmentTransformRules attachmentTransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, bWeld);
 
 			const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor);
 			if (!OtherActor->IsA(GlooBlobClass) && OtherCharacter)

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
-#include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 
 #include "GlooBlob.generated.h"

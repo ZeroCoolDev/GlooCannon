@@ -12,6 +12,7 @@ AGlooBlob::AGlooBlob()
 	PrimaryActorTick.bCanEverTick = true;
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	BoxCollision->SetCollisionResponseToAllChannels(ECR_Block);
 	BoxCollision->SetGenerateOverlapEvents(true);
 	RootComponent = BoxCollision;
 
@@ -23,7 +24,7 @@ AGlooBlob::AGlooBlob()
 
 void AGlooBlob::Init(const FHitResult& Hit, bool bAddSplatter)
 {
-	const float GlooMin = 0.075f, GlooMax = 0.13f;
+	const float GlooMin = 0.2f, GlooMax = 0.1f;
 	const float GlooSizeMod = FMath::FRandRange(GlooMin, GlooMax);
 	CreateSizeEffect(StaticMesh, GlooSizeMod);
 	CreateGlooColorEffect(StaticMesh);
