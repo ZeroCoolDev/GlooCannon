@@ -54,8 +54,6 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 	AGlooBlob* GlooBlob = static_cast<AGlooBlob*>(World->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters));
 	if (GlooBlob)
 	{
-		GlooBlob->AddSplatter(Hit);
-
 		if (OtherComp->IsSimulatingPhysics())
 		{
 			const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, true);
@@ -65,11 +63,16 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 
 		if (const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor))
 		{
+			GlooBlob->SetActorScale3D(GetActorScale3D() * 0.1f);
 			GlooBlob->SetActorEnableCollision(false);
 			int SocketIndex = FMath::RandRange(0, GlooableSockets.Num() - 1);
 			GlooBlob->K2_AttachRootComponentTo(OtherCharacter->GetMesh(), GlooableSockets[SocketIndex], EAttachLocation::SnapToTarget, true);
 
 			AddWeightToTarget(OtherCharacter);
+		}
+		else
+		{
+			GlooBlob->AddSplatter(Hit);
 		}
 	}
 }

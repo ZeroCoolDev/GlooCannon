@@ -27,7 +27,7 @@ void UWeightComponent::AddWeight()
 	if (MovementComponent)
 	{
 		const float CurrentMaxWalkSpeed = MovementComponent->MaxWalkSpeed;
-		MovementComponent->MaxWalkSpeed = CurrentMaxWalkSpeed * 0.9f;
+		MovementComponent->MaxWalkSpeed = CurrentMaxWalkSpeed * 0.8f;
 
 		if (WeightContributorCount >= WeightThreshold)
 			MovementComponent->DisableMovement();
