@@ -21,13 +21,7 @@ public:
 	void AddSplatter(const FHitResult& Hit);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void CreateSizeEffect(const USceneComponent* SceneComponent, float MaxSize);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void CreateGlooColorEffect(const UPrimitiveComponent* SceneComponent);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void CreateSplatterColorEffect(const UDecalComponent* SceneComponent);
+	void ApplySplatterColorEffect(const UDecalComponent* SceneComponent);
 
 	UPROPERTY(EditDefaultsOnly, Category="Visuals")
 	UMaterial* SplatterDecal;
@@ -41,10 +35,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Visuals")
 	float SplatterSizeMax;
 
-	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals")
 	float GlooSizeMin;
 
-	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals")
 	float GlooSizeMax;
 
 protected:
@@ -63,6 +57,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float GlooSize;
-	float SplatterSize;
 };

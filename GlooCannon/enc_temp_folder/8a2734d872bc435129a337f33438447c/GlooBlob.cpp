@@ -29,7 +29,7 @@ void AGlooBlob::AddSplatter(const FHitResult& Hit)
 	FRotator SplatterRotation = Hit.ImpactNormal.Rotation();
 	SplatterRotation.Roll = FMath::FRandRange(-180.f, 180.f);
 
-	const float SplatterSize = ((GlooSize - GlooSizeMin) / (GlooSizeMax - GlooSizeMin)) * (SplatterSizeMax - SplatterSizeMin) + SplatterSizeMin;
+	SplatterSize = ((GlooSize - GlooSizeMin) / (GlooSizeMax - GlooSizeMin)) * (SplatterSizeMax - SplatterSizeMin) + SplatterSizeMin;
 	const FVector SplatterBounds = FVector(SplatterDepth, SplatterSize, SplatterSize);
 
 	UDecalComponent* DecalComponent = UGameplayStatics::SpawnDecalAttached(SplatterDecal, SplatterBounds, Hit.GetComponent(), NAME_None, SplatterLocation, SplatterRotation, EAttachLocation::KeepWorldPosition);
@@ -44,11 +44,16 @@ void AGlooBlob::AddSplatter(const FHitResult& Hit)
 void AGlooBlob::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GlooSize = FMath::FRandRange(GlooSizeMin, GlooSizeMax);
+	ApplyGrowEffect(GlooSize);
+	ApplyColorEffect();
 }
 
 // Called every frame
 void AGlooBlob::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 

@@ -18,25 +18,34 @@ public:
 	// Sets default values for this actor's properties
 	AGlooBlob();
 
-	void Init(const FHitResult& Hit, bool bAddSplatter);
+	void AddSplatter(const FHitResult& Hit);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void CreateSizeEffect(const USceneComponent* SceneComponent, float MaxSize);
+	void ApplyGrowEffect(float MaxSize);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void CreateGlooColorEffect(const UPrimitiveComponent* SceneComponent);
+	void ApplyColorEffect();
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void CreateSplatterColorEffect(const UDecalComponent* SceneComponent);
+	void ApplySplatterColorEffect(const UDecalComponent* SceneComponent);
 
-	UPROPERTY(EditDefaultsOnly, Category="Decal")
-	UMaterial* Decal;
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	UMaterial* SplatterDecal;
 
-	UPROPERTY(EditDefaultsOnly, Category="Decal")
-	float DecalSize;
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	float SplatterDepth;
 
-	UPROPERTY(EditDefaultsOnly, Category="Decal")
-	float DecalDepth;
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	float SplatterSizeMin;
+
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	float SplatterSizeMax;
+
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	float GlooSizeMin;
+
+	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	float GlooSizeMax;
 
 protected:
 	// Called when the game starts or when spawned
@@ -54,4 +63,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float GlooSize;
+
+	float SplatterSize;
 };

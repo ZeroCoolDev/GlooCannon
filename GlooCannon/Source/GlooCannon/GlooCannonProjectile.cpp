@@ -36,7 +36,7 @@ AGlooCannonProjectile::AGlooCannonProjectile()
 
 void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (!OtherActor->IsA(AGlooCannonCharacter::StaticClass()) && GlooBlobClass)
+	if (GlooBlobClass && !OtherActor->IsA(GlooBlobClass) && !OtherActor->IsA(AGlooCannonCharacter::StaticClass()))
 		CreateGlooBlob(OtherActor, OtherComp, Hit);
 
 	Destroy();
@@ -44,38 +44,33 @@ void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAct
 
 void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveComponent* OtherComp, const FHitResult& Hit)
 {
+	UWorld* World = GetWorld();
+	if (!World)
+		return;
+
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	if (UWorld* myWorld = GetWorld())
+	const FRotator SpawnRotation = FRotationMatrix::MakeFromZ(Hit.Normal).Rotator();
+	AGlooBlob* GlooBlob = static_cast<AGlooBlob*>(World->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters));
+	if (GlooBlob)
 	{
-		const FRotator SpawnRotation = FRotationMatrix::MakeFromZ(Hit.Normal).Rotator();
-		AActor* gloo = myWorld->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters);
-		if (gloo)
+		if (!OtherActor->IsA(GlooBlobClass))
+			GlooBlob->AddSplatter(Hit);
+
+		if (OtherComp->IsSimulatingPhysics())
 		{
-			AGlooBlob* glooBlob = static_cast<AGlooBlob*>(gloo);
-			if (glooBlob && !OtherActor->IsA(GlooBlobClass))
-				glooBlob->AddSplatter(Hit);
+			const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, true);
+			GlooBlob->AttachToActor(OtherActor, AttachmentRules);
+			OtherComp->AddImpulseAtLocation(-GetVelocity(), Hit.Location);
+		}
 
-			constexpr bool bWeld = true;
-			const FAttachmentTransformRules attachmentTransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, bWeld);
+		if (const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor))
+		{
+			GlooBlob->SetActorEnableCollision(false);
+			int SocketIndex = FMath::RandRange(0, GlooableSockets.Num() - 1);
+			GlooBlob->K2_AttachRootComponentTo(OtherCharacter->GetMesh(), GlooableSockets[SocketIndex], EAttachLocation::SnapToTarget, true);
 
-			const ACharacter* OtherCharacter = Cast<ACharacter>(OtherActor);
-			if (!OtherActor->IsA(GlooBlobClass) && OtherCharacter)
-			{
-				gloo->SetActorEnableCollision(false);
-				int SocketIndex = FMath::RandRange(0, GlooableSockets.Num()-1);
-				gloo->K2_AttachRootComponentTo(OtherCharacter->GetMesh(), GlooableSockets[SocketIndex], EAttachLocation::SnapToTarget, true);
-
-				AddWeightToTarget(OtherCharacter);
-			}
-			else if (OtherComp->IsSimulatingPhysics())
-			{
-				// Apply Gloo Weight
-				gloo->AttachToActor(OtherActor, attachmentTransformRules);
-
-				OtherComp->AddImpulseAtLocation(-GetVelocity(), Hit.Location);
-			}
+			AddWeightToTarget(OtherCharacter);
 		}
 	}
 }
