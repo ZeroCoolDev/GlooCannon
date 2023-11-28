@@ -21,12 +21,6 @@ public:
 	void AddSplatter(const FHitResult& Hit);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void ApplyGrowEffect(float MaxSize);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void ApplyColorEffect();
-
-	UFUNCTION(BlueprintImplementableEvent)
 	void ApplySplatterColorEffect(const UDecalComponent* SceneComponent);
 
 	UPROPERTY(EditDefaultsOnly, Category="Visuals")
@@ -41,10 +35,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Visuals")
 	float SplatterSizeMax;
 
-	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals")
 	float GlooSizeMin;
 
-	UPROPERTY(EditDefaultsOnly, Category="Visuals")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals")
 	float GlooSizeMax;
 
 protected:
@@ -65,6 +59,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float GlooSize;
-
-	float SplatterSize;
 };

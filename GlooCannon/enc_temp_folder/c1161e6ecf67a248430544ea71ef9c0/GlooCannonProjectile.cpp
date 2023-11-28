@@ -54,7 +54,8 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 	AGlooBlob* GlooBlob = static_cast<AGlooBlob*>(World->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters));
 	if (GlooBlob)
 	{
-		GlooBlob->AddSplatter(Hit);
+		if (!OtherActor->IsA(GlooBlobClass))
+			GlooBlob->AddSplatter(Hit);
 
 		if (OtherComp->IsSimulatingPhysics())
 		{
