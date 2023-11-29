@@ -36,9 +36,6 @@ AGlooCannonProjectile::AGlooCannonProjectile()
 
 void AGlooCannonProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	// Remove the check for IsA(GlooBlobClass) if you want them to stack
-	// Disabled currently until I decide to spend time making them more intelligent than just dumb stacking
-	// The idea is they grow from within the one they hit so a mound of Gloo grows the more and more it's shot
 	if (GlooBlobClass && !OtherActor->IsA(GlooBlobClass) && !OtherActor->IsA(AGlooCannonCharacter::StaticClass()))
 		CreateGlooBlob(OtherActor, OtherComp, Hit);
 
@@ -57,6 +54,8 @@ void AGlooCannonProjectile::CreateGlooBlob(AActor* OtherActor, UPrimitiveCompone
 	AGlooBlob* GlooBlob = static_cast<AGlooBlob*>(World->SpawnActor<AActor>(GlooBlobClass, GetActorLocation(), SpawnRotation, SpawnParameters));
 	if (GlooBlob)
 	{
+		GlooBlob->AddSplatter(Hit);
+
 		if (OtherComp->IsSimulatingPhysics())
 		{
 			const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, true);
